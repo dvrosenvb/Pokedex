@@ -6,3 +6,16 @@
 //
 
 import Foundation
+class HomeInteractor: PresenterToInteractorProtocolHome {
+    
+    var presenter: InteractorToPresenterProtocolHome?
+    
+    func sessionHome(user: String, password: String) {
+        
+    }
+    
+    func sessionLogOut() {
+        
+    }
+         
+}
