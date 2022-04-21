@@ -9,22 +9,22 @@ import Foundation
 import UIKit
 
 struct CollectionTableViewCellModel {
-    let data:[ItemCollectionViewCellModel]
+    var data:[PokemonHomeModel]
 }
 
 struct CollectionTableViewCellModelCodable:Codable {
-    var data:[ItemCollectionViewCellModelCodable]
+    var data:[PokemonHomeModelCodable]
 }
 
 protocol CollectionTableViewCellDelegate:AnyObject {
-    func collectionTableViewCellItemTapped(model:ItemCollectionViewCellModel)
+    func collectionTableViewCellItemTapped(model:PokemonHomeModel)
 }
 
 class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
     static let identifier = "CollectionTableViewCell"
-    private var dataModels : [ItemCollectionViewCellModel] = []
+    private var dataModels : [PokemonHomeModel] = []
     
     weak var delegate:CollectionTableViewCellDelegate?
     
@@ -53,6 +53,11 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+          for view in contentView.subviews {
+              view.removeFromSuperview()
+          }
+      }
     
     //MARK: Layout - Add to view/layout
     override func layoutSubviews() {
@@ -87,8 +92,7 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        
-        print("::Tapped::\(indexPath.row)")
+        print("::Tapped:: \(dataModels[indexPath.row].name!)")
         let model = dataModels[indexPath.row]
         delegate?.collectionTableViewCellItemTapped(model: model)
     }

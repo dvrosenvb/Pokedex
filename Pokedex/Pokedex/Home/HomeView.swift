@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import Lottie
 
 class HomeView:UIViewController{
     //MARK: VIPER Elements
@@ -16,6 +17,7 @@ class HomeView:UIViewController{
     //MARK: Value Elements
     var tableView: UITableView?
     var reusableTableView : ComponentDataSource!
+    var homeInformation:[PokemonHomeModel] = []
     
     //MARK: UIElements
     lazy var tfSearch: UITextField = {
@@ -55,6 +57,17 @@ class HomeView:UIViewController{
         return view
     }()
     
+    lazy var viewAnimation: AnimationView = {
+        let view = AnimationView(animation: Animation.named("monster"))
+        view.contentMode = .scaleAspectFit
+        view.play()
+        view.loopMode = .autoReverse
+        return view
+    }()
+    
+    lazy var lbl = UILabel()
+    
+    
     //MARK: Lifecycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -67,13 +80,13 @@ class HomeView:UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        presenter?.interactor?.fetchFirst20()
     }
     
     //MARK: Funcs
     func setupView() {
         view.addSubview(tfSearch)
         tfSetConstraints(tfSearch)
-        
         view.addSubview(viewTableContainer)
         viewTableContainer.backgroundColor = .white
         viewTableContainer.snp.makeConstraints { make in
@@ -97,6 +110,10 @@ class HomeView:UIViewController{
     }
     
     func installTable(model:[CollectionTableViewCellModel])  {
+        for vi in viewTableContainer.subviews{
+            vi.removeFromSuperview()
+        }
+        
         DispatchQueue.main.async {
             self.tableView = UITableView()
             self.tableView?.frame = self.viewTableContainer.bounds
@@ -108,6 +125,7 @@ class HomeView:UIViewController{
         }
     }
     
+ 
     
     func goToSearch()  {
         guard let txt = tfSearch.text else { return }
@@ -119,50 +137,9 @@ class HomeView:UIViewController{
         }
         
         if !txt.isEmpty {
-            let item = ItemCollectionViewCellModel(id: 0, pokemonName: "bulbasaur", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/1.png")
-            
-            let item1 = ItemCollectionViewCellModel(id: 1, pokemonName: "ivysaur", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/2.png")
-            
-            let item2 = ItemCollectionViewCellModel(id: 2, pokemonName: "venusaur", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/3.png")
-            
-            let item3 = ItemCollectionViewCellModel(id: 3, pokemonName: "charmander", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/4.png")
-            
-            let item4 = ItemCollectionViewCellModel(id: 4, pokemonName: "charmeleon", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/5.png")
-            
-            let item5 = ItemCollectionViewCellModel(id: 4, pokemonName: "charizard", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/6.png")
-            
-            let item6 = ItemCollectionViewCellModel(id: 4, pokemonName: "squirtle", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/7.png")
-            
-            let item7 = ItemCollectionViewCellModel(id: 4, pokemonName: "wartortle", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/8.png")
-            
-            let item8 = ItemCollectionViewCellModel(id: 4, pokemonName: "blastoise", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/9.png")
-            
-            let item9 = ItemCollectionViewCellModel(id: 4, pokemonName: "caterpie", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/10.png")
-            
-            let item10 = ItemCollectionViewCellModel(id: 4, pokemonName: "metapod", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/11.png")
-            
-            let item11 = ItemCollectionViewCellModel(id: 4, pokemonName: "butterfree", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/12.png")
-            
-            let item12 = ItemCollectionViewCellModel(id: 4, pokemonName: "weedle", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/13.png")
-            
-            let item13 = ItemCollectionViewCellModel(id: 4, pokemonName: "kakuna", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/14.png")
-            
-            let item14 = ItemCollectionViewCellModel(id: 4, pokemonName: "beedrill", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/15.png")
-            
-            let item15 = ItemCollectionViewCellModel(id: 4, pokemonName: "pidgey", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/16.png")
-            
-            let item16 = ItemCollectionViewCellModel(id: 4, pokemonName: "pidgeotto", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/17.png")
-            
-            let item17 = ItemCollectionViewCellModel(id: 4, pokemonName: "pidgeot", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/18.png")
-            
-            let item18 = ItemCollectionViewCellModel(id: 4, pokemonName: "rattata", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/19.png")
-            
-            let item19 = ItemCollectionViewCellModel(id: 4, pokemonName: "raticate", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/20.png")
-            
-            let model = CollectionTableViewCellModel(data: [item, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19])
-            installTable(model: [model])
+            presenter?.searchByNameOrId(reference: txt)
         }else{
-            print("nada que buscar")
+            presenter?.interactor?.fetchFirst20()
         }
         
     }
@@ -194,6 +171,48 @@ class HomeView:UIViewController{
         btnCancel.isEnabled = false
     }
     
+    func clearView() {
+        tableView?.removeFromSuperview()
+    }
+    
+    func clearViewAfterSearch(){
+        for iview in viewTableContainer.subviews{
+            iview.removeFromSuperview()
+        }
+    }
+    
+    
+    func addAnimation() {
+        view.addSubview(viewAnimation)
+        viewAnimation.play()
+        viewAnimation.loopMode = .autoReverse
+        viewAnimation.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
+            make.top.equalTo(tfSearch.snp.bottom)
+            make.centerX.equalToSuperview()
+        }
+        
+        
+        lbl.text = "¡Ops! no se encontró ese Pokemon"
+        lbl.textAlignment = .center
+        lbl.font = ThemeManager.RegularFont(40)
+        lbl.lineBreakMode = .byWordWrapping
+        lbl.numberOfLines = 4
+        lbl.textColor = ThemeManager.searchIcon80
+        view.addSubview(lbl)
+        lbl.snp.makeConstraints { make in
+            make.top.equalTo(tfSearch.snp.bottom).offset(50)
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+        }
+    }
+    
+    func removeAnimation(){
+        lbl.removeFromSuperview()
+        viewAnimation.removeFromSuperview()
+    }
+    
     
     //MARK: Actions
     @objc func endEdition(){
@@ -216,7 +235,7 @@ class HomeView:UIViewController{
     
     @objc func enterToTF(){
         btnSetConstraints(btnCancel)
-        
+        removeAnimation()
         tfSearch.snp.remakeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(16)
@@ -233,18 +252,40 @@ class HomeView:UIViewController{
 }
 
 extension HomeView:PresenterToViewProtocolHome{
-    
-    func HomeSucceded(info: String) {
-        
+    func HomeSucceded(info: [CollectionTableViewCellModel]) {
+        clearView()
+        clearViewAfterSearch()
+        installTable(model: info)
     }
     
-    func HomeFailed(info: String) {
-        
+  
+    
+    func HomeFailed(status: Bool) {
+        if status{
+            let model = CollectionTableViewCellModel(data: [])
+            addAnimation()
+            clearView()
+            clearViewAfterSearch()
+            installTable(model: [model])
+        }
     }
+    
 }
 
 
 extension HomeView:ComponentDataSourceProtocol{
-    func elementTapped(model: ItemCollectionViewCellModel) {
+    func elementTapped(model: PokemonHomeModel) {
+        view.endEditing(true)
+        tfSetConstraints(tfSearch)
+        btnCancelRestore(btnCancel)
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+}
+
+extension HomeView:NetManagerProtocol{
+    func getDataFromServer(dataFetchedFromServer: PokemonHomeModelCodable) {
+        
     }
 }

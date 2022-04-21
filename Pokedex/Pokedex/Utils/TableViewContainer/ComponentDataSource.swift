@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol ComponentDataSourceProtocol : AnyObject {
-    func elementTapped(model:ItemCollectionViewCellModel)
+    func elementTapped(model:PokemonHomeModel)
 }
 
 
@@ -36,7 +36,7 @@ class ComponentDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
         tableView.register(CollectionTableViewCell.self, forCellReuseIdentifier: CollectionTableViewCell.identifier)
     }
     
-    func tapped(model:ItemCollectionViewCellModel){
+    func tapped(model:PokemonHomeModel){
         delegate?.elementTapped(model: model)
     }
     
@@ -60,7 +60,7 @@ class ComponentDataSource: NSObject, UITableViewDataSource, UITableViewDelegate 
 }
 
 extension ComponentDataSource:CollectionTableViewCellDelegate{
-    func collectionTableViewCellItemTapped(model: ItemCollectionViewCellModel) {
+    func collectionTableViewCellItemTapped(model: PokemonHomeModel) {
         tapped(model: model)
     }
 }

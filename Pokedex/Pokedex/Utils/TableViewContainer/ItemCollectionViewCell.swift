@@ -8,20 +8,6 @@
 import UIKit
 import SnapKit
 
-public struct ItemCollectionViewCellModel {
-    let id:Int
-    let pokemonName:String
-    let image:String
-
-}
-
-public struct ItemCollectionViewCellModelCodable:Codable {
-    let id:Int
-    let pokemonName:String
-    let image:String
-    
-}
-
 class ItemCollectionViewCell: UICollectionViewCell {
     static let identifier = "ItemCollectionViewCell"
     
@@ -40,7 +26,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
     }
     
     
-    func build(model:ItemCollectionViewCellModel){
+    func build(model:PokemonHomeModel){
         contentView.backgroundColor = ThemeManager.backgroundSearchBox
         contentView.layer.cornerRadius = ThemeManager.roundedDefault
         
@@ -50,45 +36,40 @@ class ItemCollectionViewCell: UICollectionViewCell {
             return view
         }()
          
-        lazy var ivSprite:UIImageView = {
-            let iv = UIImageView()
+        lazy var ivSprite:CustomImageView = {
+            let iv = CustomImageView()
             iv.clipsToBounds = true
+            iv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             iv.contentMode = .scaleAspectFit
             iv.layer.cornerRadius = iv.frame.width / 2
-            iv.image = ThemeManager.getImageFromUrl(url: model.image)
+            guard let ur = URL(string: model.url ?? "") else {return iv}
+            iv.donwloadImage(from: ur)
             return iv
         }()
          
         lazy var lblName : UILabel = {
             let label = UILabel()
-            label.text = (model.pokemonName.capitalized)
+            label.text = (model.name?.capitalized)
             label.numberOfLines = 1
             label.textAlignment = .left
             label.font = ThemeManager.RegularFont(24)
             return label
         }()
-        
-        
-      
-        
-        viewContainerSprite.frame.origin = CGPoint(x: 8.0, y: 10.0)
+                
+        viewContainerSprite.frame.origin = CGPoint(x: 16.0, y: 10.0)
         viewContainerSprite.frame.size.height = ThemeManager.heightSprite
         viewContainerSprite.frame.size.width = ThemeManager.heightSprite
-        viewContainerSprite.layer.cornerRadius = viewContainerSprite.frame.height / 2
         
-        ivSprite.snp.makeConstraints { make in
-            make.width.equalTo(ThemeManager.heightSprite)
-            make.height.equalTo(ThemeManager.heightSprite)
-        }
+        ivSprite.frame = CGRect(x: 4, y: -6, width: 80, height: 80)
         
         viewContainerSprite.addSubview(ivSprite)
         contentView.addSubview(viewContainerSprite)
         contentView.addSubview(lblName)
         
         lblName.snp.makeConstraints { make in
-            make.leading.equalTo(ivSprite.snp.trailing).offset(10)
+            make.leading.equalTo(ivSprite.snp.trailing).offset(4)
+            make.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.width.equalTo(contentView.frame.width * 0.6)
             make.height.equalTo(80)
         }
         

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class HomePresenter: ViewToPresenterProtocolHome {
+   
     
     var view:PresenterToViewProtocolHome?
     var interactor: PresenterToInteractorProtocolHome?
@@ -22,6 +23,15 @@ class HomePresenter: ViewToPresenterProtocolHome {
         
     }
     
+    func searchByNameOrId(reference: String) {
+        interactor?.searchByName(reference: reference)
+    }
+    
+    func searchByType(type: String) {
+        
+    }
+    
+    
     func launchHome(navigationController: UINavigationController) {
         
     }
@@ -30,12 +40,12 @@ class HomePresenter: ViewToPresenterProtocolHome {
 }
 
 extension HomePresenter:InteractorToPresenterProtocolHome{
-    func HomeSucceded(info: String) {
-            
+    func searchSucceded(info: [CollectionTableViewCellModel]) {
+        view?.HomeSucceded(info: info)
     }
     
-    func HomeFailed(info: String) {
-        
+    func searchFailed(status: Bool) {
+        view?.HomeFailed(status: status)
     }
     
     

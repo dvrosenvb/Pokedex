@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    private let mainTableView: UITableView = {
+    lazy var mainTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CollectionTableViewCell.self, forCellReuseIdentifier: CollectionTableViewCell.identifier)
         tableView.showsVerticalScrollIndicator = false
@@ -20,7 +20,6 @@ class TableViewViewController: UIViewController, UITableViewDelegate, UITableVie
     
     //MARK: DataSource Local
     private let models:[CollectionTableViewCellModel] = []
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +32,10 @@ class TableViewViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLayoutSubviews() {
         mainTableView.frame = view.bounds
     }
+    
+    
 
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return models.count
     }
@@ -56,7 +58,7 @@ class TableViewViewController: UIViewController, UITableViewDelegate, UITableVie
 }
 
 extension TableViewViewController:CollectionTableViewCellDelegate{
-    func collectionTableViewCellItemTapped(model: ItemCollectionViewCellModel) {
+    func collectionTableViewCellItemTapped(model: PokemonHomeModel) {
        
     }
     
