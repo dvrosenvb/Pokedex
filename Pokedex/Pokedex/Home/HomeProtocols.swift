@@ -11,8 +11,6 @@ import UIKit
 //MARK: Router - PresenterToRouter
 protocol PresenterToRouterProtocolHome: AnyObject {
     static func createModule() -> HomeView
-    func pushToInfoDetail(navigationController:UINavigationController)
-    func pushToHome(navigationController: UINavigationController)
 }
 
 //MARK: Presenter - ViewToPresenter

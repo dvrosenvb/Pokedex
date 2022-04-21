@@ -40,3 +40,27 @@ public struct ThemeManager{
         return image
     }
 }
+
+public enum PokemonType{
+    case Normal
+    case Fire
+    case Water
+    case Grass
+    case Electric
+    case Ice
+    case Fighting
+    case Poison
+    case Ground
+    case Flying
+    case Psychic
+    case Bug
+    case Rock
+    case Ghost
+    case Dark
+    case Dragon
+    case Steel
+    case Fairy
+    case none
+}
+
+

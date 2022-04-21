@@ -389,9 +389,6 @@ class JSONNull: Codable, Hashable {
         return true
     }
 
-    public var hashValue: Int {
-        return 0
-    }
 
     public init() {}
 
@@ -405,6 +402,10 @@ class JSONNull: Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encodeNil()
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        
     }
 }
 

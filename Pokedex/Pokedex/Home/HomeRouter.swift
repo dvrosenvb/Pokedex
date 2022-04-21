@@ -28,13 +28,5 @@ class HomeRouter: PresenterToRouterProtocolHome {
         
     }
     
-    func pushToInfoDetail(navigationController: UINavigationController) {
-        let canva = HomeRouter.createModule()
-        navigationController.pushViewController(canva, animated: true)
-    }
     
-    func pushToHome(navigationController: UINavigationController) {
-        let vc = HomeRouter.createModule()
-        navigationController.pushViewController(vc, animated: true)
-    }
 }
