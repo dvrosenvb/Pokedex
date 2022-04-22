@@ -623,3 +623,85 @@ class JSONAny: Codable {
         }
     }
 }
+
+
+
+// MARK: - Welcome
+struct PokemonTypeModel: Codable {
+    var damageRelations: DamageRelations?
+    var gameIndices: [GameIndexType]?
+    var generation: Generation?
+    var id: Int?
+    var moveDamageClass: Generation?
+    var moves: [Generation]?
+    var name: String?
+    var names: [Name]?
+    var pastDamageRelations: [PastDamageRelation]?
+    var pokemon: [Pokemon]?
+
+    enum CodingKeys: String, CodingKey {
+        case damageRelations = "damage_relations"
+        case gameIndices = "game_indices"
+        case generation, id
+        case moveDamageClass = "move_damage_class"
+        case moves, name, names
+        case pastDamageRelations = "past_damage_relations"
+        case pokemon
+    }
+}
+
+// MARK: - DamageRelations
+struct DamageRelations: Codable {
+    var doubleDamageFrom, doubleDamageTo, halfDamageFrom, halfDamageTo: [Generation]?
+    var noDamageFrom, noDamageTo: [JSONAny]?
+
+    enum CodingKeys: String, CodingKey {
+        case doubleDamageFrom = "double_damage_from"
+        case doubleDamageTo = "double_damage_to"
+        case halfDamageFrom = "half_damage_from"
+        case halfDamageTo = "half_damage_to"
+        case noDamageFrom = "no_damage_from"
+        case noDamageTo = "no_damage_to"
+    }
+}
+
+// MARK: - Generation
+struct Generation: Codable {
+    var name: String?
+    var url: String?
+}
+
+// MARK: - GameIndex
+struct GameIndexType: Codable {
+    var gameIndex: Int?
+    var generation: Generation?
+
+    enum CodingKeys: String, CodingKey {
+        case gameIndex = "game_index"
+        case generation
+    }
+}
+
+// MARK: - Name
+struct Name: Codable {
+    var language: Generation?
+    var name: String?
+}
+
+// MARK: - PastDamageRelation
+struct PastDamageRelation: Codable {
+    var damageRelations: DamageRelations?
+    var generation: Generation?
+
+    enum CodingKeys: String, CodingKey {
+        case damageRelations = "damage_relations"
+        case generation
+    }
+}
+
+// MARK: - Pokemon
+struct Pokemon: Codable {
+    var pokemon: Generation?
+    var slot: Int?
+}
+

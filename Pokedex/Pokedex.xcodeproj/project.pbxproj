@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D2E303E28134D5100D002D7 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E303D28134D5100D002D7 /* Loader.swift */; };
 		6D5DD1DE2810EC4B008C7EBC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5DD1DD2810EC4A008C7EBC /* Constants.swift */; };
 		6D5DD1E02810F429008C7EBC /* monster.json in Resources */ = {isa = PBXBuildFile; fileRef = 6D5DD1DF2810F429008C7EBC /* monster.json */; };
 		6D973BDE280F6E4A00E76F55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D973BDD280F6E4A00E76F55 /* AppDelegate.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D2E303D28134D5100D002D7 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		6D5DD1DD2810EC4A008C7EBC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		6D5DD1DF2810F429008C7EBC /* monster.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = monster.json; sourceTree = "<group>"; };
 		6D973BDA280F6E4A00E76F55 /* Pokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +195,7 @@
 				6DFCB8DC280F827000C623D9 /* UIExtension.swift */,
 				6DFCB8DE280F832700C623D9 /* ThemeManager.swift */,
 				6DF37481281068940090738D /* CustomImageView.swift */,
+				6D2E303D28134D5100D002D7 /* Loader.swift */,
 			);
 			path = UIManagers;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				6D973BE2280F6E4A00E76F55 /* ViewController.swift in Sources */,
 				6DFCB8E7280FBBF800C623D9 /* ComponentDataSource.swift in Sources */,
 				6DFCB8E9280FBC3600C623D9 /* CollectionTableViewCell.swift in Sources */,
+				6D2E303E28134D5100D002D7 /* Loader.swift in Sources */,
 				6D973BDE280F6E4A00E76F55 /* AppDelegate.swift in Sources */,
 				6DE3DA56281191C1007A70D1 /* DetailRouter.swift in Sources */,
 				6DE3DA6228123B66007A70D1 /* CVCell.swift in Sources */,

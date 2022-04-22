@@ -33,8 +33,8 @@ class HomeRouter: PresenterToRouterProtocolHome {
     }
     
     
-    func RouteToDetails(pokemonId:Int, actualVC:UINavigationController) {
-        let vc = DetailRouter.createModule(pokemonId: pokemonId)
+    func RouteToDetails(pokemonId:Int, actualVC:UINavigationController, name:String) {
+        let vc = DetailRouter.createModule(pokemonId: pokemonId, pokemonName: name)
         vc.modalPresentationStyle = .fullScreen
         actualVC.pushViewController(vc, animated: true)
     }

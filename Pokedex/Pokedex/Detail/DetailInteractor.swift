@@ -25,9 +25,7 @@ class DetailInteractor: PresenterToInteractorProtocolDetail {
             }
             
         } failure: { statusCode, response, afError in
-            print("Failed fetching information \(statusCode)")
-            print("Failed fetching information \(String(describing: response))")
-            print("Failed fetching information \(String(describing: afError))")
+            self.presenter?.infoGetFailed(status: true)
         }
     }
     

@@ -112,7 +112,7 @@ class DetailView: UIViewController {
     
     //MARK: DataElements
     var id:Int
-    lazy var titleView : String = "Pokedex"
+    var name:String
     
     var typesOfPokemon:[PokemonItemType] = []
     private var typesTableView:UITableView!
@@ -123,8 +123,9 @@ class DetailView: UIViewController {
     
     //MARK: LifeCycle
     
-    init(pokemonId:Int) {
+    init(pokemonId:Int, name:String) {
         self.id = pokemonId
+        self.name = name
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -134,6 +135,7 @@ class DetailView: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.setupDetailNavBar()
+        title = name.capitalized
     }
 
     
@@ -151,9 +153,7 @@ class DetailView: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        title = ""
         self.setupDetailNavBar()
-        title = titleView
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -434,12 +434,8 @@ class DetailView: UIViewController {
 
 extension DetailView:PresenterToViewProtocolDetail{
     func showPokemonData(info: PokemonByName) {
-        guard let pokemonName = info.name,
-        let statsCollection = info.stats,
+        guard let statsCollection = info.stats,
         let typesCollection = info.types else { return }
-        titleView  = pokemonName.capitalized
-        title = pokemonName.capitalized
-        
         
         for statValue in statsCollection{
             statCollection.append(PokemonStat(baseStat: statValue.baseStat, effort: statValue.effort, stat: ItemShared(name: statValue.stat?.name, url: statValue.stat?.url)))
@@ -455,7 +451,24 @@ extension DetailView:PresenterToViewProtocolDetail{
     }
     
     func showErrorFetchingData(status: Bool) {
-        
+        if status {
+            let viewLoaderContainer : UIView = {
+                let viewCont = UIView()
+                viewCont.backgroundColor = .white
+                viewCont.layer.cornerRadius = 32
+                return viewCont
+            }()
+            
+            viewRounded.addSubview(viewLoaderContainer)
+            viewLoaderContainer.snp.makeConstraints { make in
+                make.top.equalToSuperview()
+                make.width.equalToSuperview()
+                make.height.equalTo(600)
+            }
+            
+            let loader = Loader(parentView:viewLoaderContainer, 32.0)
+            loader.showLoader()
+        }
     }
     
     
@@ -466,19 +479,19 @@ extension DetailView: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.separatorStyle = .none
 
-        if tableView == statTableView {
-            print(statCollection[indexPath.row])
-        }else{
+        if tableView != statTableView {
             guard let nc = self.navigationController else { return }
             presenter?.routeToHome(type: typesOfPokemon[indexPath.row].type?.name,actualVC: nc)
-            
-            
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == statTableView {
             return statCollection.count
+        }
+        
+        tableView.snp.updateConstraints { make in
+            make.height.equalTo(20 * typesOfPokemon.count )
         }
         return typesOfPokemon.count
     }
@@ -505,7 +518,6 @@ extension DetailView: UITableViewDelegate, UITableViewDataSource  {
             cell.addSubview(prepareViewCellType(viewParent: cell, stat: typesOfPokemon[indexPath.row]))
         }
         
-        
         return cell
     }
     
@@ -513,6 +525,10 @@ extension DetailView: UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == statTableView {
             return 48
+        }
+        
+        tableView.snp.updateConstraints { make in
+            make.height.equalTo(30 * typesOfPokemon.count )
         }
         return 30
     }

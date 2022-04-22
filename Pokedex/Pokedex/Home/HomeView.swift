@@ -27,18 +27,7 @@ class HomeView:UIViewController{
         tf.placeholder = "Buscar..."
         return tf
     }()
-    
-    lazy var btnSearch: UIButton = {
-        let btn = UIButton()
-        var config = UIButton.Configuration.plain()
-        config.buttonSize = .large
-        config.imagePlacement = .all
-        btn.configuration = config
-        btn.tintColor = ThemeManager.searchIcon80
-        btn.setImage(UIImage(systemName: ThemeManager.iconSearch), for: .normal)
-        return btn
-    }()
-    
+     
     lazy var btnCancel: UIButton = {
         let btn = UIButton()
         var config = UIButton.Configuration.plain()
@@ -68,7 +57,7 @@ class HomeView:UIViewController{
     lazy var lbl = UILabel()
     var typeToSearch:String?
     var isSearchByType = false
-    
+    var loader:Loader?
     
     //MARK: Lifecycle
     init(type:String?) {
@@ -91,12 +80,13 @@ class HomeView:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .white
+        loader = Loader(parentView: view)
         setupView()
         
         if isSearchByType{
-            tfSearch.text = "Buscar por tipo \(typeToSearch ?? "" )"
-            presenter?.searchByType(type: typeToSearch ?? "" )
+            tfSearch.text = "\((typeToSearch ?? "" ).capitalized)"
+            presenter?.searchByNameOrId(reference: typeToSearch ?? "")
         }else{
             presenter?.interactor?.fetchFirst20()
             
@@ -161,7 +151,9 @@ class HomeView:UIViewController{
         }
         
         if !txt.isEmpty {
-            presenter?.searchByNameOrId(reference: txt)
+                        
+            presenter?.searchByNameOrId(reference: txt.lowercased())
+
         }else{
             presenter?.interactor?.fetchFirst20()
         }
@@ -244,6 +236,7 @@ class HomeView:UIViewController{
     }
     
     @objc func searchPokemon(){
+        loader?.showLoader()
         view.endEditing(true)
         goToSearch()
     }
@@ -277,6 +270,7 @@ class HomeView:UIViewController{
 
 extension HomeView:PresenterToViewProtocolHome{
     func HomeSucceded(info: [CollectionTableViewCellModel]) {
+        loader?.hideLoader()
         clearView()
         clearViewAfterSearch()
         installTable(model: info)
@@ -285,6 +279,7 @@ extension HomeView:PresenterToViewProtocolHome{
   
     
     func HomeFailed(status: Bool) {
+        loader?.hideLoader()
         if status{
             let model = CollectionTableViewCellModel(data: [])
             addAnimation()
@@ -309,6 +304,7 @@ extension HomeView:ComponentDataSourceProtocol{
         
         guard let pokemonId = model.id,
               let nc = self.navigationController,
+              let pokemonName = model.name,
               let url = model.url else { return }
         
         var pokemonIdentifier = pokemonId
@@ -323,9 +319,7 @@ extension HomeView:ComponentDataSourceProtocol{
         }
         
         title = ""
-        presenter?.goToDetails(pokemonId: (pokemonIdentifier),actualVC: nc)
-        
-        
+        presenter?.goToDetails(pokemonId: (pokemonIdentifier),actualVC: nc, name: pokemonName)
     }
 }
 

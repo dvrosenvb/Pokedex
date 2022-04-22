@@ -24,6 +24,12 @@ class DetailPresenter: ViewToPresenterProtocolDetail {
 }
 
 extension DetailPresenter : InteractorToPresenterProtocolDetail{
+    func infoGetFailed(status: Bool) {
+        if status  {
+            view?.showErrorFetchingData(status: status)
+        }
+    }
+    
     
     func infoPokemonFetched(info: PokemonByName) {
         view?.showPokemonData(info: info)

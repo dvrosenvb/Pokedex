@@ -9,11 +9,10 @@ import Foundation
 import UIKit
 
 class DetailRouter: PresenterToRouterProtocolDetail {
-   
-    
-    static func createModule(pokemonId:Int) -> DetailView {
         
-        let view = DetailView(pokemonId: pokemonId)
+    static func createModule(pokemonId: Int, pokemonName: String) -> DetailView {
+        
+        let view = DetailView(pokemonId: pokemonId,name: pokemonName)
         let presenter :ViewToPresenterProtocolDetail & InteractorToPresenterProtocolDetail = DetailPresenter()
         let interactor : PresenterToInteractorProtocolDetail = DetailInteractor()
         let router:PresenterToRouterProtocolDetail = DetailRouter()

@@ -19,17 +19,15 @@ class HomePresenter: ViewToPresenterProtocolHome {
         
     }
     
-    func goToDetails(pokemonId:Int, actualVC:UINavigationController) {
-        router?.RouteToDetails(pokemonId: pokemonId, actualVC: actualVC)
+    func goToDetails(pokemonId:Int, actualVC:UINavigationController, name:String) {
+        router?.RouteToDetails(pokemonId: pokemonId, actualVC: actualVC, name:name)
     }
     
     func searchByNameOrId(reference: String) {
         interactor?.searchByName(reference: reference)
     }
     
-    func searchByType(type: String) {
-        
-    }
+  
     
     
     func launchHome(navigationController: UINavigationController) {

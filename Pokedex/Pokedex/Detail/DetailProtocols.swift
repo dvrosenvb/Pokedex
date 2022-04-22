@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 //MARK: Presenter -> Router
 protocol PresenterToRouterProtocolDetail: AnyObject {
-    static func createModule(pokemonId:Int) -> DetailView
+    static func createModule(pokemonId:Int, pokemonName:String) -> DetailView
     func routeToHome(type:String?, actualVC:UINavigationController)
 }
 
@@ -33,6 +33,7 @@ protocol PresenterToInteractorProtocolDetail:AnyObject{
 //MARK: Interactor -> Presenter
 protocol InteractorToPresenterProtocolDetail: AnyObject {
     func infoPokemonFetched(info:PokemonByName)
+    func infoGetFailed(status:Bool)
 }
 
 

@@ -11,7 +11,7 @@ import UIKit
 //MARK: Router - PresenterToRouter
 protocol PresenterToRouterProtocolHome: AnyObject {
     static func createModule(type:String?) -> HomeView
-    func RouteToDetails(pokemonId:Int, actualVC:UINavigationController)
+    func RouteToDetails(pokemonId:Int, actualVC:UINavigationController, name:String)
 }
 
 //MARK: Presenter - ViewToPresenter
@@ -23,8 +23,7 @@ protocol ViewToPresenterProtocolHome: AnyObject {
     func launchHome(navigationController: UINavigationController)
     func tryHome(user:String, passsword:String)
     func searchByNameOrId(reference:String)
-    func searchByType(type:String)
-    func goToDetails(pokemonId:Int, actualVC:UINavigationController)
+    func goToDetails(pokemonId:Int, actualVC:UINavigationController, name:String)
 }
 
 //MARK: Interactor - InteractorToPresenter
@@ -44,5 +43,6 @@ protocol PresenterToInteractorProtocolHome:AnyObject{
     var presenter:InteractorToPresenterProtocolHome? {get set}
     func fetchFirst20()
     func searchByName(reference:String)
+    
 }
 
