@@ -13,7 +13,7 @@ public class EntryPoint {
     public static let shared = EntryPoint()
     
     public static func startViperModule() -> UIViewController {
-//        return HomeRouter.createModule()
-        return DetailRouter.createModule()
+        return HomeRouter.createModule(type: "")
+//        return DetailRouter.createModule(pokemonId: 25)
     }
 }

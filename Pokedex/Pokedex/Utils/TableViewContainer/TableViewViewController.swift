@@ -62,5 +62,4 @@ extension TableViewViewController:CollectionTableViewCellDelegate{
        
     }
     
-    
 }

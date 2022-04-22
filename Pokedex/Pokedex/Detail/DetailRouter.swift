@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import UIKit
 
 class DetailRouter: PresenterToRouterProtocolDetail {
    
     
-    static func createModule() -> DetailView {
+    static func createModule(pokemonId:Int) -> DetailView {
         
-        let view = DetailView(nibName: nil, bundle: nil)
+        let view = DetailView(pokemonId: pokemonId)
         let presenter :ViewToPresenterProtocolDetail & InteractorToPresenterProtocolDetail = DetailPresenter()
         let interactor : PresenterToInteractorProtocolDetail = DetailInteractor()
         let router:PresenterToRouterProtocolDetail = DetailRouter()
@@ -27,7 +28,9 @@ class DetailRouter: PresenterToRouterProtocolDetail {
         
     }
     
-    func routeToHome(type: String?) {
-        
+    func routeToHome(type: String?, actualVC:UINavigationController) {
+        let vc = HomeRouter.createModule(type: type)
+        vc.modalPresentationStyle = .fullScreen
+        actualVC.pushViewController(vc, animated: true)
     }
 }

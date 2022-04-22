@@ -92,7 +92,6 @@ class CollectionTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        print("::Tapped:: \(dataModels[indexPath.row].name!)")
         let model = dataModels[indexPath.row]
         delegate?.collectionTableViewCellItemTapped(model: model)
     }

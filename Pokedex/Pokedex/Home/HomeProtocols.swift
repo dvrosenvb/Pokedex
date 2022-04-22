@@ -10,7 +10,8 @@ import UIKit
 
 //MARK: Router - PresenterToRouter
 protocol PresenterToRouterProtocolHome: AnyObject {
-    static func createModule() -> HomeView
+    static func createModule(type:String?) -> HomeView
+    func RouteToDetails(pokemonId:Int, actualVC:UINavigationController)
 }
 
 //MARK: Presenter - ViewToPresenter
@@ -23,7 +24,7 @@ protocol ViewToPresenterProtocolHome: AnyObject {
     func tryHome(user:String, passsword:String)
     func searchByNameOrId(reference:String)
     func searchByType(type:String)
-    func logout()
+    func goToDetails(pokemonId:Int, actualVC:UINavigationController)
 }
 
 //MARK: Interactor - InteractorToPresenter

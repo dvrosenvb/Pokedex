@@ -19,8 +19,8 @@ class HomePresenter: ViewToPresenterProtocolHome {
         
     }
     
-    func logout() {
-        
+    func goToDetails(pokemonId:Int, actualVC:UINavigationController) {
+        router?.RouteToDetails(pokemonId: pokemonId, actualVC: actualVC)
     }
     
     func searchByNameOrId(reference: String) {

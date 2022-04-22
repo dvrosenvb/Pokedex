@@ -66,21 +66,45 @@ class HomeView:UIViewController{
     }()
     
     lazy var lbl = UILabel()
+    var typeToSearch:String?
+    var isSearchByType = false
     
     
     //MARK: Lifecycle
+    init(type:String?) {
+        self.typeToSearch = type
+        super.init(nibName: nil, bundle: nil)
+        
+        if let typeAux = type {
+            isSearchByType = typeAux != "" ? true : false
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let attrs = [NSAttributedString.Key.font: ThemeManager.CustomFont(29)]
-        self.navigationController?.navigationBar.standardAppearance.titleTextAttributes = attrs
-        view.backgroundColor = .white
-        title = "Pokedex"
+        navigationItem.hidesBackButton = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupView()
-        presenter?.interactor?.fetchFirst20()
+        
+        if isSearchByType{
+            tfSearch.text = "Buscar por tipo \(typeToSearch ?? "" )"
+            presenter?.searchByType(type: typeToSearch ?? "" )
+        }else{
+            presenter?.interactor?.fetchFirst20()
+            
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.setupHomeNavBar()
     }
     
     //MARK: Funcs
@@ -281,6 +305,27 @@ extension HomeView:ComponentDataSourceProtocol{
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
+       
+        
+        guard let pokemonId = model.id,
+              let nc = self.navigationController,
+              let url = model.url else { return }
+        
+        var pokemonIdentifier = pokemonId
+        
+        if pokemonId == 0{
+            let array = url.components(separatedBy: "/")
+            let idAux =  "\(array[10])"
+            let i = idAux.components(separatedBy: ".")
+            let poId = Int(i[0]) ?? 0
+            
+            pokemonIdentifier = poId
+        }
+        
+        title = ""
+        presenter?.goToDetails(pokemonId: (pokemonIdentifier),actualVC: nc)
+        
+        
     }
 }
 

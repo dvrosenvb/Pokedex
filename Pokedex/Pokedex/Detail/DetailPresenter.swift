@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 class DetailPresenter: ViewToPresenterProtocolDetail {
-    
+     
     var view: PresenterToViewProtocolDetail?
     var interactor: PresenterToInteractorProtocolDetail?
     var router: PresenterToRouterProtocolDetail?
@@ -16,11 +17,15 @@ class DetailPresenter: ViewToPresenterProtocolDetail {
     func fetchPokemonDetail(referencePokemon: String) {
         
     }
+    
+    func routeToHome(type: String?, actualVC:UINavigationController) {
+        router?.routeToHome(type: type, actualVC: actualVC)
+    }
 }
 
 extension DetailPresenter : InteractorToPresenterProtocolDetail{
     
-    func infoPokemonFetched(info: PokemonHomeModel) {
-        
+    func infoPokemonFetched(info: PokemonByName) {
+        view?.showPokemonData(info: info)
     }
 }

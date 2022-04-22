@@ -25,7 +25,7 @@ class HomeInteractor: PresenterToInteractorProtocolHome {
             if statusCode == 200 {
                 let info = response
             
-                var ix = 0
+                var ix = 1
                 var ixx = 1
                 for i in info.results {
                     model.data.append(PokemonHomeModel(id: ix, name: i.name ?? "", url: "\(Constants.URL_IMG)\(ixx).png"))

@@ -10,10 +10,14 @@ import UIKit
 
 class HomeRouter: PresenterToRouterProtocolHome {
     
+    
+    
+    
+    
     weak var viewController:HomeView?
     
-    static func createModule() -> HomeView{
-        let view = HomeView(nibName: nil, bundle: nil)
+    static func createModule(type: String?) -> HomeView{
+        let view = HomeView(type:type)
         let presenter:ViewToPresenterProtocolHome & InteractorToPresenterProtocolHome = HomePresenter()
         let interactor:PresenterToInteractorProtocolHome = HomeInteractor()
         let router:PresenterToRouterProtocolHome = HomeRouter()
@@ -26,6 +30,13 @@ class HomeRouter: PresenterToRouterProtocolHome {
         
         return view
         
+    }
+    
+    
+    func RouteToDetails(pokemonId:Int, actualVC:UINavigationController) {
+        let vc = DetailRouter.createModule(pokemonId: pokemonId)
+        vc.modalPresentationStyle = .fullScreen
+        actualVC.pushViewController(vc, animated: true)
     }
     
     

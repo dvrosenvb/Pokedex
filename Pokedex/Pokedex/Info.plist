@@ -5,6 +5,9 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>upheavtt.ttf</string>
+		<string>Dongle-Regular.ttf</string>
+		<string>RedHatDisplay-Regular.ttf</string>
+		<string>RedHatDisplay-SemiBold.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

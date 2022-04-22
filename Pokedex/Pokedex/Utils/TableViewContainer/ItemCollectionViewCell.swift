@@ -52,6 +52,7 @@ class ItemCollectionViewCell: UICollectionViewCell {
             label.text = (model.name?.capitalized)
             label.numberOfLines = 1
             label.textAlignment = .left
+            label.textColor = ThemeManager.txtName
             label.font = ThemeManager.RegularFont(24)
             return label
         }()

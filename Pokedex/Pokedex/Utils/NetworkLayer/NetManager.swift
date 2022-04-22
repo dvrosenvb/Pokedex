@@ -25,13 +25,17 @@ class NetManager {
                                          success: @escaping (_ statusCode: Int, _ response: T?) -> Void,
                                          failure: @escaping (_ statusCode: Int, _ response: T?, _ afError: AFError?) -> Void)
     {
+        print(":::::baseUrl -> \(baseUrl)")
+        
         func parseResponseData(_ data: Data?) -> T? {
             guard let data = data else { return nil }
-            return try? JSONDecoder().decode(T.self, from: data)
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return try? decoder.decode(T.self, from: data)
         }
         
         
-        AF.request(baseUrl, encoding: JSONEncoding.default){ $0.timeoutInterval = 30 }
+        AF.request(baseUrl, encoding: JSONEncoding.default){ $0.timeoutInterval = 60 }
         .validate(statusCode: 200..<300)
         .responseDecodable { (response: DataResponse<T, AFError>) in
             
